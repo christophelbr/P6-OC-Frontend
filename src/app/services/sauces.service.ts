@@ -87,7 +87,7 @@ export class SaucesService {
               private auth: AuthService) {}
 
   getSauces() {
-    this.https.get('https://sopekocko.herokuapp.com/api/sauces').subscribe(
+    this.http.get('https://sopekocko.herokuapp.com/api/sauces').subscribe(
       (sauces: Sauce[]) => {
         this.sauces$.next(sauces);
       },
@@ -100,7 +100,7 @@ export class SaucesService {
 
   getSauceById(id: string) {
     return new Promise((resolve, reject) => {
-      this.https.get('https://sopekocko.herokuapp.com/api/sauces/' + id).subscribe(
+      this.http.get('https://sopekocko.herokuapp.com/api/sauces/' + id).subscribe(
         (sauce: Sauce) => {
           resolve(sauce);
         },
@@ -113,7 +113,7 @@ export class SaucesService {
 
   likeSauce(id: string, like: boolean) {
     return new Promise((resolve, reject) => {
-      this.https.post(
+      this.http.post(
         'https://sopekocko.herokuapp.com/api/sauces/' + id + '/like',
         {
           userId: this.auth.getUserId(),
@@ -132,7 +132,7 @@ export class SaucesService {
 
   dislikeSauce(id: string, dislike: boolean) {
     return new Promise((resolve, reject) => {
-      this.https.post(
+      this.http.post(
         'https://sopekocko.herokuapp.com/api/sauces/' + id + '/like',
         {
           userId: this.auth.getUserId(),
@@ -154,7 +154,7 @@ export class SaucesService {
       const formData = new FormData();
       formData.append('sauce', JSON.stringify(sauce));
       formData.append('image', image);
-      this.https.post('https://sopekocko.herokuapp.com/api/sauces', formData).subscribe(
+      this.http.post('https://sopekocko.herokuapp.com/api/sauces', formData).subscribe(
         (response: { message: string }) => {
           resolve(response);
         },
@@ -168,7 +168,7 @@ export class SaucesService {
   modifySauce(id: string, sauce: Sauce, image: string | File) {
     return new Promise((resolve, reject) => {
       if (typeof image === 'string') {
-        this.https.put('https://sopekocko.herokuapp.com/api/sauces/' + id, sauce).subscribe(
+        this.http.put('https://sopekocko.herokuapp.com/api/sauces/' + id, sauce).subscribe(
           (response: { message: string }) => {
             resolve(response);
           },
@@ -180,7 +180,7 @@ export class SaucesService {
         const formData = new FormData();
         formData.append('sauce', JSON.stringify(sauce));
         formData.append('image', image);
-        this.https.put('https://sopekocko.herokuapp.com/api/sauces/' + id, formData).subscribe(
+        this.http.put('https://sopekocko.herokuapp.com/api/sauces/' + id, formData).subscribe(
           (response: { message: string }) => {
             resolve(response);
           },
